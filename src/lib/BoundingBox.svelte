@@ -1,23 +1,23 @@
 <script lang="ts">
     import { onMount, onDestroy } from 'svelte';
 
-    type Box = {
-        dimensions: { x: number; y: number; width: number; height: number };
-        coordinates: { x1: number; y1: number; x2: number; y2: number };
-    };
+    type Dimensions = { x: number; y: number; width: number; height: number };
+    type Coordinates = { x1: number; y1: number; x2: number; y2: number };
 
-    export let boxes: Box[] = [];
+    export let dimensionsBoxes: Dimensions[] = [];
+    export let coordinatesBoxes: Coordinates[] = [];
     export let outerColor: string = 'rgb(255,62,0)';
     export let innerColor: string = 'rgba(255,62,0,0.2)';
     let drawing = false;
-    let currentBox: Box | null = null;
+    let currentDimensions: Dimensions | null = null;
+    let currentCoordinates: Coordinates | null = null;
     let startX: number;
     let startY: number;
     let container;
     const MIN_SIZE = 5;
 
-    function isInsideBox(box: Box, x: number, y: number): boolean {
-        return x >= box.dimensions.x && x <= box.dimensions.x + box.dimensions.width && y >= box.dimensions.y && y <= box.dimensions.y + box.dimensions.height;
+    function isInsideBox(box: Dimensions, x: number, y: number): boolean {
+        return x >= box.x && x <= box.x + box.width && y >= box.y && y <= box.y + box.height;
     }
 
     function startDrawing(event) {
@@ -27,16 +27,19 @@
         startX = clientX - rect.left;
         startY = clientY - rect.top;
 
-        for (let i = 0; i < boxes.length; i++) {
-            if (isInsideBox(boxes[i], startX, startY)) {
-                boxes = boxes.filter((_, index) => index !== i);
+        for (let i = 0; i < dimensionsBoxes.length; i++) {
+            if (isInsideBox(dimensionsBoxes[i], startX, startY)) {
+                dimensionsBoxes = dimensionsBoxes.filter((_, index) => index !== i);
+                coordinatesBoxes = coordinatesBoxes.filter((_, index) => index !== i);
                 return;
             }
         }
 
         drawing = true;
-        currentBox = { dimensions: { x: startX, y: startY, width: 0, height: 0 }, coordinates: { x1: startX, y1: startY, x2: startX, y2: startY } };
-        boxes = [...boxes, currentBox];
+        currentDimensions = { x: startX, y: startY, width: 0, height: 0 };
+        currentCoordinates = { x1: startX, y1: startY, x2: startX, y2: startY };
+        dimensionsBoxes = [...dimensionsBoxes, currentDimensions];
+        coordinatesBoxes = [...coordinatesBoxes, currentCoordinates];
     }
 
     function draw(event) {
@@ -52,27 +55,30 @@
         const right = Math.max(startX, currentX);
         const bottom = Math.max(startY, currentY);
 
-        if (currentBox) {
-            currentBox.dimensions.x = left;
-            currentBox.dimensions.y = top;
-            currentBox.dimensions.width = right - left;
-            currentBox.dimensions.height = bottom - top;
+        if (currentDimensions && currentCoordinates) {
+            currentDimensions.x = left;
+            currentDimensions.y = top;
+            currentDimensions.width = right - left;
+            currentDimensions.height = bottom - top;
 
-            currentBox.coordinates.x1 = left;
-            currentBox.coordinates.y1 = top;
-            currentBox.coordinates.x2 = right;
-            currentBox.coordinates.y2 = bottom;
+            currentCoordinates.x1 = left;
+            currentCoordinates.y1 = top;
+            currentCoordinates.x2 = right;
+            currentCoordinates.y2 = bottom;
         }
 
-        boxes = [...boxes];
+        dimensionsBoxes = [...dimensionsBoxes];
+        coordinatesBoxes = [...coordinatesBoxes];
     }
 
     function stopDrawing() {
-        if (currentBox && (Math.abs(currentBox.dimensions.width) < MIN_SIZE || Math.abs(currentBox.dimensions.height) < MIN_SIZE)) {
-            boxes = boxes.slice(0, -1);
+        if (currentDimensions && (Math.abs(currentDimensions.width) < MIN_SIZE || Math.abs(currentDimensions.height) < MIN_SIZE)) {
+            dimensionsBoxes = dimensionsBoxes.slice(0, -1);
+            coordinatesBoxes = coordinatesBoxes.slice(0, -1);
         }
         drawing = false;
-        currentBox = null;
+        currentDimensions = null;
+        currentCoordinates = null;
     }
 
     onMount(() => {
@@ -100,10 +106,10 @@
 
 <div bind:this={container} on:mousedown={startDrawing} style="position: relative; width: 100%; height: 100%;">
     <slot></slot>
-    {#each boxes as box, index}
+    {#each dimensionsBoxes as box, index}
         <div
             class="bounding-box"
-            style="left: {box.dimensions.x}px; top: {box.dimensions.y}px; width: {box.dimensions.width}px; height: {box.dimensions.height}px; --outer-color: {outerColor}; --inner-color: {innerColor};"
+            style="left: {box.x}px; top: {box.y}px; width: {box.width}px; height: {box.height}px; --outer-color: {outerColor}; --inner-color: {innerColor};"
         ></div>
     {/each}
 </div>

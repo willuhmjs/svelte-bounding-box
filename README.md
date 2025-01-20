@@ -25,13 +25,13 @@ This Svelte component allows you to draw, delete, and resize bounding boxes over
     ```svelte
     <script>
         import BoundingBox from "$lib/BoundingBox.svelte";
-        import type { Coordinates, Dimensions, Box } from "$routes/+page.svelte";
+        import type { Coordinates, Dimensions } from "$routes/+page.svelte";
     </script>
     ```
 
 2. Wrap the content you want to draw bounding boxes over with the `BoundingBox` component:
     ```svelte
-    <BoundingBox>
+    <BoundingBox bind:dimensionsBoxes={dimensionsBoxes} bind:coordinatesBoxes={coordinatesBoxes}>
         <div style="width: 100%; height: 100%; background-color: lightgrey;">
             <h1>Demo Content</h1>
             <p>Draw bounding boxes over this content.</p>
@@ -58,10 +58,10 @@ Here is a complete example:
 ```svelte
 <script>
     import BoundingBox from "$lib/BoundingBox.svelte";
-    import type { Coordinates, Dimensions, Box } from "$routes/+page.svelte";
+    import type { Coordinates, Dimensions } from "$routes/+page.svelte";
 </script>
 
-<BoundingBox>
+<BoundingBox bind:dimensionsBoxes={dimensionsBoxes} bind:coordinatesBoxes={coordinatesBoxes}>
     <div style="width: 100%; height: 100%; background-color: lightgrey;">
         <h1>Demo Content</h1>
         <p>Draw bounding boxes over this content.</p>
