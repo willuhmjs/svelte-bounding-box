@@ -43,7 +43,7 @@ jobs:
         uses: actions/deploy-pages@v1
 
   npm-publish:
-    if: github.event_name != 'pull_request'
+    if: github.event_name != 'pull_request' && contains(github.event.head_commit.message, 'package.json')
     runs-on: ubuntu-latest
     permissions:
       contents: read
