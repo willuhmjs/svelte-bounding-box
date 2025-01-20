@@ -31,7 +31,7 @@ jobs:
       - name: Install Dependencies
         run: npm install
       - name: Build Project
-        run: npm build
+        run: npm run build
       - name: Setup Pages
         uses: actions/configure-pages@v2
       - name: Upload artifact
@@ -55,7 +55,7 @@ jobs:
       - name: Install Dependencies
         run: npm install
       - name: Build Project
-        run: npm build
+        run: npm run build
       - name: Publish to npm
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
