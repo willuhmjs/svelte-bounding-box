@@ -1,21 +1,21 @@
 <script lang="ts">
     import BoundingBox from "$lib/BoundingBox.svelte";
 
-    export interface Coordinates {
+    interface Coordinates {
         x1: number;
         y1: number;
         x2: number;
         y2: number;
     }
 
-    export interface Dimensions {
+     interface Dimensions {
         x: number;
         y: number;
         width: number;
         height: number;
     }
 
-    export interface Box {
+     interface Box {
         dimensions: Dimensions;
         coordinates: Coordinates;
     }

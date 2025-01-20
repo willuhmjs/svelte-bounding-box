@@ -1,6 +1,5 @@
 <script lang="ts">
     import { onMount } from 'svelte';
-    import type { Box } from '../routes/+page.svelte';
 
     export let boxes: Box[] = [];
     export let outerColor: string = 'rgb(255,62,0)';
