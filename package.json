@@ -53,5 +53,9 @@
 	},
 	"dependencies": {
 		"@sveltejs/adapter-static": "^3.0.8"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/willuhmjs/svelte-bounding-box"
 	}
 }
