@@ -76,13 +76,17 @@
     }
 
     onMount(() => {
-        window.addEventListener('mousemove', draw);
-        window.addEventListener('mouseup', stopDrawing);
+        if (typeof window !== 'undefined') {
+            window.addEventListener('mousemove', draw);
+            window.addEventListener('mouseup', stopDrawing);
+        }
     });
 
     onDestroy(() => {
-        window.removeEventListener('mousemove', draw);
-        window.removeEventListener('mouseup', stopDrawing);
+        if (typeof window !== 'undefined') {
+            window.removeEventListener('mousemove', draw);
+            window.removeEventListener('mouseup', stopDrawing);
+        }
     });
 </script>
 
