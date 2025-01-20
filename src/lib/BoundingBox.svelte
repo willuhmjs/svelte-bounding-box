@@ -9,6 +9,8 @@
     }
 
     export let boxes: Box[] = [];
+    export let outerColor: string = 'rgb(255,62,0)';
+    export let innerColor: string = 'rgba(255,62,0,0.2)';
     let drawing = false;
     let currentBox: Box | null = null;
     let startX: number;
@@ -77,8 +79,8 @@
 <style>
     .bounding-box {
         position: absolute;
-        border: 2px solid red;
-        background-color: rgba(255, 0, 0, 0.2);
+        border: 2px solid var(--outer-color);
+        background-color: var(--inner-color);
     }
 </style>
 
@@ -87,7 +89,7 @@
     {#each boxes as box, index}
         <div
             class="bounding-box"
-            style="left: {box.x}px; top: {box.y}px; width: {box.width}px; height: {box.height}px;"
+            style="left: {box.x}px; top: {box.y}px; width: {box.width}px; height: {box.height}px; --outer-color: {outerColor}; --inner-color: {innerColor};"
         ></div>
     {/each}
 </div>
