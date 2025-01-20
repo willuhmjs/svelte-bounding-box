@@ -5,18 +5,8 @@ This Svelte component allows you to draw, delete, and resize bounding boxes over
 ## Installation
 
 1. Clone the repository:
-    ```sh
-    git clone https://github.com/your-username/svelte-bounding-box.git
     ```
-
-2. Navigate to the project directory:
-    ```sh
-    cd svelte-bounding-box
-    ```
-
-3. Install dependencies:
-    ```sh
-    npm install
+    npm i svelte-bounding-box
     ```
 
 ## Usage
@@ -24,14 +14,13 @@ This Svelte component allows you to draw, delete, and resize bounding boxes over
 1. Import the `BoundingBox` component and the interfaces in your Svelte file:
     ```svelte
     <script>
-        import BoundingBox from "$lib/BoundingBox.svelte";
-        import type { Coordinates, Dimensions } from "$routes/+page.svelte";
+        import BoundingBox from "BoundingBox";
     </script>
     ```
 
 2. Wrap the content you want to draw bounding boxes over with the `BoundingBox` component:
     ```svelte
-    <BoundingBox bind:dimensionsBoxes={dimensionsBoxes} bind:coordinatesBoxes={coordinatesBoxes}>
+    <BoundingBox bind:boxes>
         <div style="width: 100%; height: 100%; background-color: lightgrey;">
             <h1>Demo Content</h1>
             <p>Draw bounding boxes over this content.</p>
