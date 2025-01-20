@@ -1,5 +1,10 @@
 <script lang="ts">
-    import { onMount } from 'svelte';
+    import { onMount, onDestroy } from 'svelte';
+
+    type Box = {
+        dimensions: { x: number; y: number; width: number; height: number };
+        coordinates: { x1: number; y1: number; x2: number; y2: number };
+    };
 
     export let boxes: Box[] = [];
     export let outerColor: string = 'rgb(255,62,0)';
@@ -47,15 +52,17 @@
         const right = Math.max(startX, currentX);
         const bottom = Math.max(startY, currentY);
 
-        currentBox.dimensions.x = left;
-        currentBox.dimensions.y = top;
-        currentBox.dimensions.width = right - left;
-        currentBox.dimensions.height = bottom - top;
+        if (currentBox) {
+            currentBox.dimensions.x = left;
+            currentBox.dimensions.y = top;
+            currentBox.dimensions.width = right - left;
+            currentBox.dimensions.height = bottom - top;
 
-        currentBox.coordinates.x1 = left;
-        currentBox.coordinates.y1 = top;
-        currentBox.coordinates.x2 = right;
-        currentBox.coordinates.y2 = bottom;
+            currentBox.coordinates.x1 = left;
+            currentBox.coordinates.y1 = top;
+            currentBox.coordinates.x2 = right;
+            currentBox.coordinates.y2 = bottom;
+        }
 
         boxes = [...boxes];
     }
@@ -71,6 +78,11 @@
     onMount(() => {
         window.addEventListener('mousemove', draw);
         window.addEventListener('mouseup', stopDrawing);
+    });
+
+    onDestroy(() => {
+        window.removeEventListener('mousemove', draw);
+        window.removeEventListener('mouseup', stopDrawing);
     });
 </script>
 
