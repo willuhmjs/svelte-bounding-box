@@ -21,10 +21,11 @@ This Svelte component allows you to draw, delete, and resize bounding boxes over
 
 ## Usage
 
-1. Import the `BoundingBox` component in your Svelte file:
+1. Import the `BoundingBox` component and the interfaces in your Svelte file:
     ```svelte
     <script>
         import BoundingBox from "$lib/BoundingBox.svelte";
+        import type { Coordinates, Dimensions, Box } from "$routes/+page.svelte";
     </script>
     ```
 
@@ -57,6 +58,7 @@ Here is a complete example:
 ```svelte
 <script>
     import BoundingBox from "$lib/BoundingBox.svelte";
+    import type { Coordinates, Dimensions, Box } from "$routes/+page.svelte";
 </script>
 
 <BoundingBox>

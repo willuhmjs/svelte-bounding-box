@@ -1,12 +1,6 @@
 <script lang="ts">
     import { onMount } from 'svelte';
-
-    interface Box {
-        x: number;
-        y: number;
-        width: number;
-        height: number;
-    }
+    import type { Box } from '../routes/+page.svelte';
 
     export let boxes: Box[] = [];
     export let outerColor: string = 'rgb(255,62,0)';
@@ -19,7 +13,7 @@
     const MIN_SIZE = 5;
 
     function isInsideBox(box: Box, x: number, y: number): boolean {
-        return x >= box.x && x <= box.x + box.width && y >= box.y && y <= box.y + box.height;
+        return x >= box.dimensions.x && x <= box.dimensions.x + box.dimensions.width && y >= box.dimensions.y && y <= box.dimensions.y + box.dimensions.height;
     }
 
     function startDrawing(event) {
@@ -37,7 +31,7 @@
         }
 
         drawing = true;
-        currentBox = { x: startX, y: startY, width: 0, height: 0 };
+        currentBox = { dimensions: { x: startX, y: startY, width: 0, height: 0 }, coordinates: { x1: startX, y1: startY, x2: startX, y2: startY } };
         boxes = [...boxes, currentBox];
     }
 
@@ -54,16 +48,21 @@
         const right = Math.max(startX, currentX);
         const bottom = Math.max(startY, currentY);
 
-        currentBox.x = left;
-        currentBox.y = top;
-        currentBox.width = right - left;
-        currentBox.height = bottom - top;
+        currentBox.dimensions.x = left;
+        currentBox.dimensions.y = top;
+        currentBox.dimensions.width = right - left;
+        currentBox.dimensions.height = bottom - top;
+
+        currentBox.coordinates.x1 = left;
+        currentBox.coordinates.y1 = top;
+        currentBox.coordinates.x2 = right;
+        currentBox.coordinates.y2 = bottom;
 
         boxes = [...boxes];
     }
 
     function stopDrawing() {
-        if (currentBox && (Math.abs(currentBox.width) < MIN_SIZE || Math.abs(currentBox.height) < MIN_SIZE)) {
+        if (currentBox && (Math.abs(currentBox.dimensions.width) < MIN_SIZE || Math.abs(currentBox.dimensions.height) < MIN_SIZE)) {
             boxes = boxes.slice(0, -1);
         }
         drawing = false;
@@ -89,7 +88,7 @@
     {#each boxes as box, index}
         <div
             class="bounding-box"
-            style="left: {box.x}px; top: {box.y}px; width: {box.width}px; height: {box.height}px; --outer-color: {outerColor}; --inner-color: {innerColor};"
+            style="left: {box.dimensions.x}px; top: {box.dimensions.y}px; width: {box.dimensions.width}px; height: {box.dimensions.height}px; --outer-color: {outerColor}; --inner-color: {innerColor};"
         ></div>
     {/each}
 </div>
