@@ -3,7 +3,7 @@
 
     type Coordinates = { x1: number; y1: number; x2: number; y2: number };
 
-	let { children, coordinatesBoxes = $bindable([]), outerColor = 'rgb(255, 62, 0)', innerColor = 'rgba(255, 62, 0, 0.2)'} = $props();
+	let { children, coordinatesBoxes = $bindable([]), outerColor = $bindable('rgb(255, 62, 0)'), innerColor = $bindable('rgba(255, 62, 0, 0.2)')} = $props();
 
     let drawing = $state(false);
     let currentCoordinates: Coordinates | null = $state(null);
