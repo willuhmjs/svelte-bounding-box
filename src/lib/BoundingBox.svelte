@@ -104,7 +104,7 @@
     }
 </style>
 
-<div bind:this={container} on:mousedown={startDrawing} style="position: relative; width: 100%; height: 100%;">
+<div bind:this={container} onmousedown={startDrawing} style="position: relative; width: 100%; height: 100%;">
     <slot></slot>
     {#each dimensionsBoxes as box, index}
         <div
