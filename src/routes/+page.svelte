@@ -15,8 +15,8 @@
         height: number;
     }
 
-    let dimensionsBoxes: Dimensions[] = [];
-    let coordinatesBoxes: Coordinates[] = [];
+    let dimensionsBoxes: Dimensions[] = $state([]);
+    let coordinatesBoxes: Coordinates[] = $state([]);
 </script>
 
 <BoundingBox bind:dimensionsBoxes={dimensionsBoxes} bind:coordinatesBoxes={coordinatesBoxes}>

@@ -4,16 +4,27 @@
     type Dimensions = { x: number; y: number; width: number; height: number };
     type Coordinates = { x1: number; y1: number; x2: number; y2: number };
 
-    export let dimensionsBoxes: Dimensions[] = [];
-    export let coordinatesBoxes: Coordinates[] = [];
-    export let outerColor: string = 'rgb(255,62,0)';
-    export let innerColor: string = 'rgba(255,62,0,0.2)';
+    interface Props {
+        dimensionsBoxes?: Dimensions[];
+        coordinatesBoxes?: Coordinates[];
+        outerColor?: string;
+        innerColor?: string;
+        children?: import('svelte').Snippet;
+    }
+
+    let {
+        dimensionsBoxes = $bindable([]),
+        coordinatesBoxes = $bindable([]),
+        outerColor = 'rgb(255,62,0)',
+        innerColor = 'rgba(255,62,0,0.2)',
+        children
+    }: Props = $props();
     let drawing = false;
     let currentDimensions: Dimensions | null = null;
     let currentCoordinates: Coordinates | null = null;
     let startX: number;
     let startY: number;
-    let container;
+    let container = $state();
     const MIN_SIZE = 5;
 
     function isInsideBox(box: Dimensions, x: number, y: number): boolean {
@@ -104,8 +115,8 @@
     }
 </style>
 
-<div bind:this={container} on:mousedown={startDrawing} style="position: relative; width: 100%; height: 100%;">
-    <slot></slot>
+<div bind:this={container} onmousedown={startDrawing} style="position: relative; width: 100%; height: 100%;">
+    {@render children?.()}
     {#each dimensionsBoxes as box, index}
         <div
             class="bounding-box"
