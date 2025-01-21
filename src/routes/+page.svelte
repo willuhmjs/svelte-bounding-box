@@ -8,18 +8,10 @@
         y2: number;
     }
 
-    interface Dimensions {
-        x: number;
-        y: number;
-        width: number;
-        height: number;
-    }
-
-    let dimensionsBoxes: Dimensions[] = [];
     let coordinatesBoxes: Coordinates[] = [];
 </script>
 
-<BoundingBox bind:dimensionsBoxes={dimensionsBoxes} bind:coordinatesBoxes={coordinatesBoxes}>
+<BoundingBox bind:coordinatesBoxes={coordinatesBoxes}>
     <div class="content">
         <h1>Demo Content</h1>
         <p>Draw bounding boxes over this content.</p>
@@ -27,7 +19,6 @@
 </BoundingBox>
 
 <div class="pre-container">
-    <pre>{JSON.stringify(dimensionsBoxes, null, 2)}</pre>
     <pre>{JSON.stringify(coordinatesBoxes, null, 2)}</pre>
 </div>
 
