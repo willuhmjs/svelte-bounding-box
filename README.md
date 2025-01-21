@@ -12,7 +12,6 @@ You can customize the appearance of the bounding boxes by modifying the `outerCo
 Example:
 ```svelte
 <BoundingBox
-    bind:dimensionsBoxes={dimensionsBoxes}
     bind:coordinatesBoxes={coordinatesBoxes}
     outerColor="rgb(0, 123, 255)"
     innerColor="rgba(0, 123, 255, 0.2)"
